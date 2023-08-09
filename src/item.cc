@@ -1298,12 +1298,48 @@ int weaponGetDamageType(Object* critter, Object* weapon)
     Proto* proto;
 
     if (weapon != NULL) {
-        protoGetProto(weapon->pid, &proto);
 
-        return proto->item.data.weapon.damageType;
+        int ammoTypePid = weaponGetAmmoTypePid(weapon);
+        if (ammoTypePid == -1) {
+            return 0;
+        }
+        if (protoGetProto(ammoTypePid, &proto) == -1) {
+            return 0;
+        }
+
+        //char* text2;
+        //text2 = ".";
+        //if (proto->item.data.ammo.damageType == 0) { text2 = "ammo_weapon_0"; }
+        //if (proto->item.data.ammo.damageType == 1) { text2 = "ammo_weapon_1"; }
+        //if (proto->item.data.ammo.damageType == 2) { text2 = "ammo_weapon_2"; }
+        //if (proto->item.data.ammo.damageType == 3) { text2 = "ammo_weapon_3"; }
+        //if (proto->item.data.ammo.damageType == 4) { text2 = "ammo_weapon_4"; }
+        //if (proto->item.data.ammo.damageType == 5) { text2 = "ammo_weapon_5"; }
+        //if (proto->item.data.ammo.damageType == 6) { text2 = "ammo_weapon_6"; }
+        //displayMonitorAddMessage(text2);
+
+        return proto->item.data.ammo.damageType;
+
+
+
+
+        //protoGetProto(weapon->pid, &proto);
+        
+        //char* text2;
+        //text2 = ".";
+        //if (proto->item.data.weapon.damageType == 0) { text2 = "weapon_0"; }
+        //if (proto->item.data.weapon.damageType == 1) { text2 = "weapon_1"; }
+        //if (proto->item.data.weapon.damageType == 2) { text2 = "weapon_2"; }
+        //displayMonitorAddMessage(text2);
+
+        //return proto->item.data.weapon.damageType;
     }
 
     if (critter != NULL) {
+        //char* text2;
+        //text2 = "weapon_critterDamageType";
+        //displayMonitorAddMessage(text2);
+
         return critterGetDamageType(critter);
     }
 
@@ -1788,11 +1824,43 @@ int weaponGetProjectilePid(Object* weapon)
         return -1;
     }
 
-    Proto* proto;
-    protoGetProto(weapon->pid, &proto);
+    //Proto* proto;
+    //protoGetProto(weapon->pid, &proto);    
+    //return proto->item.data.weapon.projectilePid;
 
-    return proto->item.data.weapon.projectilePid;
+    int ammoTypePid = weaponGetAmmoTypePid(weapon);
+    //char text1[10];    
+    //snprintf(text1, sizeof(text1), "%d", ammoTypePid);
+    //displayMonitorAddMessage(text1);
+
+    if (ammoTypePid == -1) {
+        return -1;
+    }
+
+    
+    
+    Proto* proto;
+    protoGetProto(ammoTypePid, &proto);
+    //int nrProto = protoGetProto(ammoTypePid, &proto);
+
+    //char text2[10];
+    //snprintf(text2, sizeof(text2), "%d", nrProto);
+    //displayMonitorAddMessage(text2);    
+    //if (nrProto == -1) {
+    //    return -1;
+    //}    
+
+
+    //char text3[10];
+    //snprintf(text3, sizeof(text3), "%d", proto->item.data.ammo.projectilePid);
+    //displayMonitorAddMessage(text3);
+
+    return proto->item.data.ammo.projectilePid;
 }
+
+
+
+
 
 // 0x478DF8
 int weaponGetAmmoTypePid(Object* weapon)
