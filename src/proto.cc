@@ -1899,6 +1899,8 @@ static int protoWrite(Proto* proto, File* stream)
         if (fileWriteInt32(stream, proto->scenery.field_2C) == -1) return -1;
         if (fileWriteUInt8(stream, proto->scenery.field_34) == -1) return -1;
         if (protoSceneryDataWrite(&(proto->scenery.data), proto->scenery.type, stream) == -1) return -1;
+
+        return 0;
     case OBJ_TYPE_WALL:
         if (fileWriteInt32(stream, proto->wall.lightDistance) == -1) return -1;
         if (_db_fwriteLong(stream, proto->wall.lightIntensity) == -1) return -1;
