@@ -468,6 +468,7 @@ int proto_item_subdata_init(Proto* proto, int type)
         proto->item.data.ammo.damageDivisor = 1;
 		proto->item.data.ammo.damageType = 0;
 		proto->item.data.ammo.projectilePid = -1;
+        proto->item.data.ammo.soundCode = 0;
         break;
     case ITEM_TYPE_MISC:
         proto->item.data.misc.powerTypePid = -1;
@@ -1615,7 +1616,7 @@ static int protoItemDataRead(ItemProtoData* item_data, int type, File* stream)
         if (fileReadInt32(stream, &(item_data->ammo.damageDivisor)) == -1) return -1;
 		if (fileReadInt32(stream, &(item_data->ammo.damageType)) == -1) return -1;
 		if (fileReadInt32(stream, &(item_data->ammo.projectilePid)) == -1) return -1;
-		
+        if (fileReadUInt8(stream, &(item_data->ammo.soundCode)) == -1) return -1;
         return 0;
     case ITEM_TYPE_MISC:
         if (fileReadInt32(stream, &(item_data->misc.powerTypePid)) == -1) return -1;
@@ -1803,6 +1804,7 @@ static int protoItemDataWrite(ItemProtoData* item_data, int type, File* stream)
         if (fileWriteInt32(stream, item_data->ammo.damageDivisor) == -1) return -1;
 		if (fileWriteInt32(stream, item_data->ammo.damageType) == -1) return -1;
 		if (fileWriteInt32(stream, item_data->ammo.projectilePid) == -1) return -1;
+        if (fileReadUInt8(stream, &(item_data->ammo.soundCode)) == -1) return -1;
 
         return 0;
     case ITEM_TYPE_MISC:

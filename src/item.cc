@@ -1859,9 +1859,6 @@ int weaponGetProjectilePid(Object* weapon)
 }
 
 
-
-
-
 // 0x478DF8
 int weaponGetAmmoTypePid(Object* weapon)
 {
@@ -1883,10 +1880,25 @@ char weaponGetSoundId(Object* weapon)
         return '\0';
     }
 
-    Proto* proto;
-    protoGetProto(weapon->pid, &proto);
+    int ammoTypePid = weaponGetAmmoTypePid(weapon);
+    //char text1[10];
+    //snprintf(text1, sizeof(text1), "%d", ammoTypePid);
+    //displayMonitorAddMessage(text1);
 
-    return proto->item.data.weapon.soundCode & 0xFF;
+    if (ammoTypePid == -1) {
+        return -1;
+    }
+
+    Proto* proto;
+    protoGetProto(ammoTypePid, &proto);
+
+    return proto->item.data.ammo.soundCode & 0xFF;
+
+
+    //Proto* proto;
+    //protoGetProto(weapon->pid, &proto);
+
+    //return proto->item.data.weapon.soundCode & 0xFF;
 }
 
 // 0x478E5C
